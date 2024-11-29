@@ -1,16 +1,19 @@
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class App {
 
-    public static String[] servers = { "cloud-1", "cloud-2", "cloud-3", "vip-1", "vip-2" };
+    public static final Set<String> SERVERS = new HashSet<>(Arrays.asList("cloud-2", "cloud-2", "cloud-3", "vip-1", "vip-2"));
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.printf("\033[H\033[2J");
-        startup(input);
-        input.close();
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.printf("\033[H\033[2J");
+            startup(input);
+        }
     }
+
 
     public static void login(String username, String server) {
         System.out.printf("\033[H\033[2J");
@@ -35,14 +38,10 @@ public class App {
             System.out.println("Enter your server!");
             reqServer = input.next();
 
-            Arrays.parallelSort(servers);
-            int index = Arrays.binarySearch(servers, reqServer);
-
-            if (index < 0) {
-                System.out.println("\nInvalid server!");
-            } else {
-                isServerValid = true;
+            if (SERVERS.contains(reqServer)) {
+                return reqServer;
             }
+            System.out.println("\nInvalid server!");
         }
 
         return reqServer;
@@ -51,7 +50,7 @@ public class App {
     public static void startup(Scanner input) {
         String status = "";
 
-        while (!status.toLowerCase().equals("yes") || status.toLowerCase().equals("no")) {
+        while (!status.equalsIgnoreCase("yes") || status.equalsIgnoreCase("no")) {
             System.out.println("Would you like to go online? [YES/NO]");
             status = input.nextLine();
             if (status.toLowerCase().equals("no")) {
