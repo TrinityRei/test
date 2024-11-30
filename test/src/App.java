@@ -5,7 +5,8 @@ import java.util.Set;
 
 public class App {
 
-    public static final Set<String> SERVERS = new HashSet<>(Arrays.asList("cloud-2", "cloud-2", "cloud-3", "vip-1", "vip-2"));
+    public static final Set<String> SERVERS = new HashSet<>(
+            Arrays.asList("cloud-2", "cloud-2", "cloud-3", "vip-1", "vip-2"));
 
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
@@ -14,12 +15,10 @@ public class App {
         }
     }
 
-
     public static void login(String username, String server) {
         System.out.printf("\033[H\033[2J");
         System.out.println(
-            "Welcome to the app!\nYour name: " + username + "\nCurrent server: " + server
-        );
+                "Welcome to the app!\nYour name: " + username + "\nCurrent server: " + server);
     }
 
     public static void getCredentials(Scanner input) {
@@ -32,9 +31,7 @@ public class App {
     }
 
     public static String checkServer(Scanner input, String reqServer) {
-        boolean isServerValid = false;
-
-        while (!isServerValid == true) {
+        while (true) {
             System.out.println("Enter your server!");
             reqServer = input.next();
 
@@ -43,8 +40,6 @@ public class App {
             }
             System.out.println("\nInvalid server!");
         }
-
-        return reqServer;
     }
 
     public static void startup(Scanner input) {
